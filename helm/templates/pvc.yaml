@@ -1,0 +1,22 @@
+{{ if (and (.Values.storage.enabled)  (not .Values.storage.name)) }}
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: {{ include "foundry-vtt.fullname" . }}
+  labels:
+    {{- include "foundry-vtt.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - {{ .Values.storage.accessMode | default "ReadWriteOnce" }}
+  resources:
+    requests:
+      storage: {{ .Values.storage.size | default "10Gi" }}
+      {{- if .Values.storage.storageClass }}
+      storageClassName: {{ .Values.storage.storageClass | quote }}
+      {{- end }}
+      {{- if .Values.storage.annotations }}
+      annotations:
+        {{- toYaml .Values.storage.annotations | nindent 8 }}
+      {{- end }}
+{{- end }}

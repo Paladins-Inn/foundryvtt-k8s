@@ -1,0 +1,39 @@
+kind: ConfigMap
+metadata:
+  name: {{ include "foundry-vtt.fullname" . }}
+  labels:
+    {{- include "foundry-vtt.labels" . | nindent 4 }}
+data:
+  option.json: |-
+    {
+      "awsConfig": null,
+      "compressSocket": false,
+      "compressStatic": true,
+      "cssTheme": {{ .Values.theme | default "dark" | quote }},
+      "dataPath": "/data",
+      "fullscreen": false,
+      "hostname": "{{ .Values.hostname | default "changeme" }}",
+      "hotReload": false,
+      "language": "{{ .Values.language | default "en.core" }}",
+      "localHostname": null,
+      "passwordSalt": null,
+      "port": {{ .Values.service.port | default 8080 }},
+      "protocol": null,
+      "proxyPort": 443,
+      "proxySSL": true,
+      "routePrefix": null,
+    {{- if .Values.ingress.tls.enabled }}
+      "sslCert": "/etc/tls-certs/tls.crt",
+      "sslKey": "/etc/tls-certs/tls.key",
+    {{- else }}
+      "sslCert": null,
+      "sslKey": null,
+    {{- end }}
+      "telemetry": false,
+      "updateChannel": "stable",
+      "upnp": false,
+      "upnpLeaseDuration": null,
+      "world": null,
+      "deleteNEDB": false,
+      "serviceConfig": null
+    }

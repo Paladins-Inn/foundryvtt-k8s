@@ -1,0 +1,4 @@
+= OCI Image
+
+include::partial$config.adoc[]
+

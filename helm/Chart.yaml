@@ -1,0 +1,6 @@
+apiVersion: v2
+name: foundry-vtt
+description: A chart for deploying Foundry Virtual Tabletop (VTT) on k8s.
+type: application
+version: 1.0.0
+appVersion: "13"

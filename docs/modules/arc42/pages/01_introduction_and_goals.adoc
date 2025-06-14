@@ -1,0 +1,37 @@
+= Introduction and Goals
+
+include::partial$config.adoc[]
+
+This project provides a container image for Foundry VTT and a helm chart to install it.
+
+== Requirements Overview
+
+* {fs01}
+* {fs02}
+* {co01}
+* {us02}
+
+
+== Quality Goals
+
+* {re01}
+* {us03}
+* {mt01}
+
+<<<
+== Stakeholders
+
+[cols="<.<2,<.<2,<.<6a",options="header",frame="topbot",grid="rows"]
+|===
+|Role/Name|Contact|Expectations
+
+|Paladins Inn
+|Roland T. Lichti
+|A small project to provide a place for players to meet and play games together.
+
+|Torganized Play
+|Roland T. Lichti 
+|The first and most important project to use kp-users is the Delphi Council Information System supporting Torganized Play.
+|===
+
+<<<

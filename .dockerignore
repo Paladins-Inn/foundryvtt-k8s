@@ -1,0 +1,10 @@
+.git/
+.github/
+.idea/
+README.md
+helm/
+*.iml
+.gitignore
+/foundry-vtt/
+README.md
+LICENSE

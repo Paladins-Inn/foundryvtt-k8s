@@ -1,0 +1,7 @@
+---
+title: Foundry VTT OCI Container
+version: 0.x
+name: foundry-vtt
+nav:
+  - modules/ROOT/pages/nav.adoc
+  - modules/arc42/pages/nav.adoc

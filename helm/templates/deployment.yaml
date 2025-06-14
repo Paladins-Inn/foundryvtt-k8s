@@ -1,0 +1,140 @@
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ include "foundry-vtt.fullname" . }}
+  labels:
+    {{- include "foundry-vtt.labels" . | nindent 4 }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      {{- include "foundry-vtt.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "foundry-vtt.labels" . | nindent 8 }}
+        {{- with .Values.podLabels }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "foundry-vtt.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default "latest" }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+          env:
+            - name: FOUNDRY_ADMIN_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "foundry-vtt.fullname" . }}
+                  key: adminKey
+          {{ with .Values.env }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          {{ with .Values.envFrom }}
+          envFrom:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          startupProbe:
+            {{- toYaml .Values.startupProbe | nindent 12 }}
+          livenessProbe:
+            {{- toYaml .Values.livenessProbe | nindent 12 }}
+          readinessProbe:
+            {{- toYaml .Values.readinessProbe | nindent 12 }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+              readOnly: false
+            - name: data
+              mountPath: {{ .Values.storage.mountPath | default "/data" }}
+              readOnly: false
+            - name: secrets
+              mountPath: /etc/secrets
+              readOnly: true
+            - name: config
+              mountPath: /data/Config/option.json
+              subPath: option.json
+              readOnly: true
+            - name: license
+              mountPath: /data/Config/license.json
+              subPath: license.json
+              readOnly: true
+          {{- if .Values.ingress.tls.enabled }}
+            - name: tls-certs
+              mountPath: /etc/tls-certs
+              readOnly: true
+          {{- end }}
+          {{- with .Values.volumeMounts }}
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      volumes:
+        - name: tmp
+          emptyDir:
+            medium: Memory
+            sizeLimit: 50Mi
+        - name: data
+          persistentVolumeClaim:
+          {{- if .Values.storage.name }}
+            claimName: {{ .Values.storage.name }}
+          {{- else }}
+            claimName: {{ include "foundry-vtt.fullname" . }}-data
+          {{- end }}
+            readOnly: false
+        - name: secrets
+          secret:
+            secretName: {{ include "foundry-vtt.fullname" . }}
+            optional: false
+        - name: config
+          configMap:
+            name: {{ include "foundry-vtt.fullname" . }}
+            optional: false
+            items:
+              - key: option.json
+                path: option.json
+        - name: license
+          secret:
+            secretName: {{ include "foundry-vtt.fullname" . }}
+            optional: false
+            items:
+              - key: license
+                path: license.json
+        {{- if .Values.ingress.tls.enabled }}
+        - name: tls-certs
+          secret:
+            secretName: {{ include "foundry-vtt.fullname" . }}-tls
+            optional: true
+        {{- end }}
+      {{- with .Values.volumes }}
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
