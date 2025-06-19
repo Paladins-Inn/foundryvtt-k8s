@@ -1,3 +1,2 @@
 = Helm Chart
-
 include::partial$config.adoc[]
