@@ -2,4 +2,4 @@
 :authorinitials: RTL
 :email: rlichti@kaiserpfalz-edv.de
 
-:revnumber: 0.1
+:revnumber: 1.x
