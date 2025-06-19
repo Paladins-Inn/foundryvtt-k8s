@@ -1,6 +1,6 @@
 ---
-title: Foundry VTT OCI Container
-version: 0.x
+title: FoundryVTT@k8s
+version: "1.x"
 name: foundry-vtt
 nav:
   - modules/ROOT/pages/nav.adoc

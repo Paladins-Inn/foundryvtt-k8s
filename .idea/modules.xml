@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/../../kaiserpfalz-edv/cluster-gitops/cluster-gitops.iml" filepath="$PROJECT_DIR$/../../kaiserpfalz-edv/cluster-gitops/cluster-gitops.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../docs/docs.iml" filepath="$PROJECT_DIR$/../docs/docs.iml" />
       <module fileurl="file://$PROJECT_DIR$/foundryvtt-k8s.iml" filepath="$PROJECT_DIR$/foundryvtt-k8s.iml" />
     </modules>
   </component>
