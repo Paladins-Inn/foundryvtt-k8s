@@ -1,2 +1,5 @@
 /unpacked/
 FoundryVTT-*.zip
+node_modules/
+node/
+dist/
