@@ -34,7 +34,7 @@ data:
       "updateChannel": "stable",
       "upnp": false,
       "upnpLeaseDuration": null,
-      "world": null,
+      "world": {{ (.Values.world | quote) | default "null"}},
       "deleteNEDB": false,
       "serviceConfig": null
     }
