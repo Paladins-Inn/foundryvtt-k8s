@@ -3,7 +3,7 @@
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: {{ include "foundry-vtt.fullname" . }}
+  name: {{ include "foundry-vtt.fullname" . }}-data
   labels:
     {{- include "foundry-vtt.labels" . | nindent 4 }}
 spec:

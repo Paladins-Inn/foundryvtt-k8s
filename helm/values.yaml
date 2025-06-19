@@ -55,6 +55,9 @@ ingress:
   tls:
     enabled: true
     cert-manager: true
+    issuer: ""
+    duration: ""
+    renewBefore: ""
     key: ""
     cert: ""
   className: "openshift-default"
@@ -79,6 +82,8 @@ resources:
      cpu: 500m
      memory: 512Mi
 
+probles:
+  enabled: false
 startupProbe:
   httpGet:
     path: /api/status

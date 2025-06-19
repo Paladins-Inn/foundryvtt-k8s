@@ -5,10 +5,16 @@ metadata:
   name: {{ include "foundry-vtt.fullname" . }}
   labels:
     {{- include "foundry-vtt.labels" . | nindent 4 }}
-  {{- with .Values.ingress.annotations }}
   annotations:
+    {{- if .Values.ingress.tls.enabled }}
+    cert-manager.io/cluster-issuer: {{ .Values.ingress.tls.issuer | default "letsencrypt-prod" | quote }}
+    cert-manager.io/common-name: {{ .Values.hostname | quote }}
+    cert-manager.io/duration: {{ .Values.ingress.tls.duration | default "2160h0m0s" | quote }}
+    cert-manager.io/renew-before: {{ .Values.ingress.tls.renewBefore | default "1800h0m0s" | quote }}
+    {{- end }}
+    {{- with .Values.ingress.annotations }}
     {{- toYaml . | nindent 4 }}
-  {{- end }}
+    {{- end }}
 spec:
   {{- with .Values.ingress.className }}
   ingressClassName: {{ . }}
@@ -18,7 +24,7 @@ spec:
   {{- range .Values.ingress.hosts }}
   - hosts:
     - {{ .host | quote }}
-    secretName: {{ include "foundry-vtt.fullname" . }}-tls
+    secretName: {{ include "foundry-vtt.fullname" $ }}-tls
   {{- end }}
   {{- end }}
   rules:
@@ -27,9 +33,7 @@ spec:
     http:
       paths:
       - path: {{ .path }}
-        {{- with .pathType }}
-        pathType: {{ . }}
-        {{- end }}
+        pathType: {{ .pathType | default "ImplementationSpecific" | quote }}
         backend:
           service:
             name: {{ include "foundry-vtt.fullname" $ }}

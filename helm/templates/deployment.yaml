@@ -6,6 +6,8 @@ metadata:
   labels:
     {{- include "foundry-vtt.labels" . | nindent 4 }}
 spec:
+  strategy:
+    type: Recreate
   replicas: 1
   selector:
     matchLabels:
@@ -52,12 +54,14 @@ spec:
           envFrom:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          {{- if .Values.probles.enabled}}
           startupProbe:
             {{- toYaml .Values.startupProbe | nindent 12 }}
           livenessProbe:
             {{- toYaml .Values.livenessProbe | nindent 12 }}
           readinessProbe:
             {{- toYaml .Values.readinessProbe | nindent 12 }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:
@@ -71,9 +75,9 @@ spec:
               mountPath: /etc/secrets
               readOnly: true
             - name: config
-              mountPath: /data/Config/option.json
-              subPath: option.json
-              readOnly: true
+              mountPath: /data/Config/options.json
+              subPath: options.json
+              readOnly: false
             - name: license
               mountPath: /data/Config/license.json
               subPath: license.json
@@ -108,8 +112,8 @@ spec:
             name: {{ include "foundry-vtt.fullname" . }}
             optional: false
             items:
-              - key: option.json
-                path: option.json
+              - key: options.json
+                path: options.json
         - name: license
           secret:
             secretName: {{ include "foundry-vtt.fullname" . }}
