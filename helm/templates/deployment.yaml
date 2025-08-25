@@ -74,14 +74,6 @@ spec:
             - name: secrets
               mountPath: /etc/secrets
               readOnly: true
-            - name: config
-              mountPath: /data/Config/options.json
-              subPath: options.json
-              readOnly: false
-            - name: license
-              mountPath: /data/Config/license.json
-              subPath: license.json
-              readOnly: true
           {{- if .Values.ingress.tls.enabled }}
             - name: tls-certs
               mountPath: /etc/tls-certs
@@ -107,13 +99,6 @@ spec:
           secret:
             secretName: {{ include "foundry-vtt.fullname" . }}
             optional: false
-        - name: config
-          configMap:
-            name: {{ include "foundry-vtt.fullname" . }}
-            optional: false
-            items:
-              - key: options.json
-                path: options.json
         - name: license
           secret:
             secretName: {{ include "foundry-vtt.fullname" . }}

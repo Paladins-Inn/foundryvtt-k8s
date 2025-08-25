@@ -1,6 +1,15 @@
 apiVersion: v2
 name: foundry-vtt
-description: A chart for deploying Foundry Virtual Tabletop (VTT) on k8s.
+description: |-
+  A chart for deploying Foundry Virtual Tabletop (VTT) on k8s.
+  
+  CHANGELOG
+  =========
+  2.0.0 Initial release
+        * First version to deploy Foundry VTT 13.x on k8s using the fleddy/foundryvtt image.
+maintainers:
+  - name: klenkes74
+    email: rlichti@kaiserpfalz-edv.de
+    url: https://www.lichti.de
 type: application
-version: 1.0.0-beta.5
-appVersion: "13"
+version: 2.0.0

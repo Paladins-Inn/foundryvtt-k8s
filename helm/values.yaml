@@ -19,7 +19,7 @@ storage:
   size: 20Gi
 
 image:
-  repository: quay.io/paladinsinn/foundry-vtt
+  repository: felddy/foundryvtt
   pullPolicy: IfNotPresent
   tag: ""
 
@@ -43,12 +43,12 @@ securityContext:
    capabilities:
      drop:
      - ALL
-   readOnlyRootFilesystem: true
+   readOnlyRootFilesystem: false
    runAsNonRoot: true
 
 service:
   type: ClusterIP
-  port: 8080
+  port: 30000
 
 ingress:
   enabled: false
