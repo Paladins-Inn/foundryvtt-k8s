@@ -5,6 +5,15 @@ hostname: &hostname "changeme"
 license: "changeme"
 adminPassword: "changeme"
 
+hashiCorpVault:
+  enabled: false
+  server: "http://vault.vault.svc.cluster.local:8200"
+  path: "changeme"
+  version: "v1"
+  secretRef:
+    credential: "changeme"
+    name: "changeme"
+
 env:
   - name: "FOUNDRY_WORLD"
     value: *world
