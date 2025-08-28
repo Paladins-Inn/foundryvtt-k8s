@@ -42,17 +42,30 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-            - name: FOUNDRY_ADMIN_KEY
-              valueFrom:
-                secretKeyRef:
-                  name: {{ include "foundry-vtt.fullname" . }}
-                  key: adminKey
+          - name: FOUNDRY_ADMIN_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "foundry-vtt.fullname" . }}
+                key: adminPassword
+          - name: FOUNDRY_LICENSE_KEY
+            valueFrom:
+              secretKeyRef:
+                name: {{ include "foundry-vtt.fullname" . }}
+                key: license_key
+          - name: FOUNDRY_HOSTNAME
+            value: {{ .Values.hostname | default "changeme" | quote }}
+          - name: FOUNDRY_LANGUAGE
+            value: {{ .Values.language | default "de.lang-de" | quote }}
+          - name: FOUNDRY_WORLD
+            value: {{ .Values.world | default "default" | quote }}
+          - name: FOUNDRY_CSS_THEME
+            value: {{ .Values.theme | default "dark" | quote }}
           {{ with .Values.env }}
-            {{- toYaml . | nindent 12 }}
+            {{- toYaml . | nindent 10 }}
           {{- end }}
           {{ with .Values.envFrom }}
           envFrom:
-            {{- toYaml . | nindent 12 }}
+          {{- toYaml . | nindent 10 }}
           {{- end }}
           {{- if .Values.probles.enabled}}
           startupProbe:
