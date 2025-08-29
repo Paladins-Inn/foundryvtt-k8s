@@ -47,6 +47,11 @@ spec:
                 secretKeyRef:
                   name: {{ include "foundry-vtt.fullname" . }}
                   key: adminKey
+            - name: FOUNDRY_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "foundry-vtt.fullname" . }}
+                  key: adminKey
           {{ with .Values.env }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
