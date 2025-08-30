@@ -5,6 +5,16 @@ description: |-
   
   CHANGELOG
   =========
+  2.2.1 Renaming resources
+        * Renaming resources - there are always left-overs you forgot to change (deploment secrets)
+  2.2.0 External stores
+        * Enable external vault stores.
+  2.1.3 Patience could reduce patch levels
+        * handling the external secret correctly.
+  2.1.2 Doing it right would be easier
+        * handle the license key better.
+  2.1.1 Lazy peoples curse
+        * external secrets operators apiVersion is v1 not v1beta1. Copy'n'paste can be a curse ...
   2.1.0 Secret Management with External Secrets
         * Added support for External Secret Operator with HashiCorp Vault integration.
   2.0.0 Initial release
@@ -14,4 +24,4 @@ maintainers:
     email: rlichti@kaiserpfalz-edv.de
     url: https://www.lichti.de
 type: application
-version: 2.1.0
+version: 2.2.1

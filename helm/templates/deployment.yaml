@@ -42,24 +42,16 @@ spec:
               containerPort: {{ .Values.service.port }}
               protocol: TCP
           env:
-          - name: FOUNDRY_ADMIN_KEY
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "foundry-vtt.fullname" . }}
-                key: adminPassword
-          - name: FOUNDRY_LICENSE_KEY
-            valueFrom:
-              secretKeyRef:
-                name: {{ include "foundry-vtt.fullname" . }}
-                key: license_key
-          - name: FOUNDRY_HOSTNAME
-            value: {{ .Values.hostname | default "changeme" | quote }}
-          - name: FOUNDRY_LANGUAGE
-            value: {{ .Values.language | default "de.lang-de" | quote }}
-          - name: FOUNDRY_WORLD
-            value: {{ .Values.world | default "default" | quote }}
-          - name: FOUNDRY_CSS_THEME
-            value: {{ .Values.theme | default "dark" | quote }}
+            - name: FOUNDRY_ADMIN_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "foundry-vtt.fullname" . }}-config
+                  key: adminPassword
+            - name: FOUNDRY_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "foundry-vtt.fullname" . }}-config
+                  key: license_key
           {{ with .Values.env }}
             {{- toYaml . | nindent 10 }}
           {{- end }}
@@ -110,15 +102,8 @@ spec:
             readOnly: false
         - name: secrets
           secret:
-            secretName: {{ include "foundry-vtt.fullname" . }}
+            secretName: {{ include "foundry-vtt.fullname" . }}-config
             optional: false
-        - name: license
-          secret:
-            secretName: {{ include "foundry-vtt.fullname" . }}
-            optional: false
-            items:
-              - key: license
-                path: license.json
         {{- if .Values.ingress.tls.enabled }}
         - name: tls-certs
           secret:
