@@ -102,7 +102,7 @@ spec:
             readOnly: false
         - name: secrets
           secret:
-            secretName: {{ include "foundry-vtt.fullname" . }}
+            secretName: {{ include "foundry-vtt.fullname" . }}-config
             optional: false
         {{- if .Values.ingress.tls.enabled }}
         - name: tls-certs
