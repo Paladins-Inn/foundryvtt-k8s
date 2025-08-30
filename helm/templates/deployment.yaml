@@ -45,12 +45,12 @@ spec:
             - name: FOUNDRY_ADMIN_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "foundry-vtt.fullname" . }}
+                  name: {{ include "foundry-vtt.fullname" . }}-config
                   key: adminPassword
             - name: FOUNDRY_LICENSE_KEY
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "foundry-vtt.fullname" . }}
+                  name: {{ include "foundry-vtt.fullname" . }}-config
                   key: license_key
           {{ with .Values.env }}
             {{- toYaml . | nindent 12 }}
@@ -104,13 +104,6 @@ spec:
           secret:
             secretName: {{ include "foundry-vtt.fullname" . }}
             optional: false
-        - name: license
-          secret:
-            secretName: {{ include "foundry-vtt.fullname" . }}
-            optional: false
-            items:
-              - key: license
-                path: license.json
         {{- if .Values.ingress.tls.enabled }}
         - name: tls-certs
           secret:

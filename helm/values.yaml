@@ -1,12 +1,19 @@
 world: &world "default"
 theme: "dark"
 language: "de.lang-de"
-hostname: &hostname "changeme"
+hostname: "changeme"
 license: "changeme"
 adminPassword: "changeme"
+containerPreserveConfig: "true"
+foundryHotReload: "true"
 
 hashiCorpVault:
   enabled: false
+  externalStore: {}
+    # kind: ""
+    # name: ""
+    
+    
   server: "http://vault.vault.svc.cluster.local:8200"
   path: "changeme"
   key: "changeme"

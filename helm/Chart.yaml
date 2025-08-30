@@ -5,6 +5,8 @@ description: |-
   
   CHANGELOG
   =========
+  2.2.0 External stores
+        * Enable external vault stores.
   2.1.3 Patience could reduce patch levels
         * handling the external secret correctly.
   2.1.2 Doing it right would be easier
@@ -20,4 +22,4 @@ maintainers:
     email: rlichti@kaiserpfalz-edv.de
     url: https://www.lichti.de
 type: application
-version: 2.1.3
+version: 2.2.0
